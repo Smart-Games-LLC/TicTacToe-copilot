@@ -1,0 +1,189 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.ttt-container {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.ttt-title {
+  margin-bottom: 32px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.ttt-newgame {
+  margin-bottom: 0;        /* Remove extra margin if present */
+  font-size: 1.2rem;
+  padding: 10px 24px;
+  cursor: pointer;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+  height: 48px;            /* Set a fixed height to match the label */
+  display: flex;
+  align-items: center;
+}
+.ttt-newgame:hover {
+  background: #1565c0;
+}
+
+.ttt-board {
+  display: inline-block;
+  background: #fafafa;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.ttt-row {
+  display: flex;
+}
+
+.ttt-cell {
+  width: 100px;
+  height: 100px;
+  font-size: 64px;
+  font-weight: bold;
+  border: none;
+  background: #fff;
+  color: #0277bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  outline: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  position: relative;
+  border-radius: 0 !important;
+}
+
+/* Only add right border to first and second cell in each row */
+.ttt-cell:not(:last-child) {
+  border-right: 4px solid #333;
+}
+
+/* Only add bottom border to first and second row */
+.ttt-row:not(:last-child) .ttt-cell {
+  border-bottom: 4px solid #333;
+}
+
+.ttt-cell:disabled {
+  cursor: default;
+  background: #f0f0f0;
+}
+
+.ttt-cell.O {
+  color: #ef6c00;
+}
+
+.ttt-result {
+  min-height: 60px;
+  margin-top: 16px;
+}
+
+.ttt-winner, .ttt-draw {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.ttt-winner {
+  color: #43a047;
+}
+
+.ttt-draw {
+  color: #b71c1c;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 32px; /* Add margin below settings */
+}
+
+.settings label {
+  display: flex;
+  align-items: center;
+  height: 100%;           /* Ensure label is as tall as the button */
+  justify-content: center; /* Center vertically if button is taller */
+  font-size: 1.5em; /* Increase font size by 50% */
+  font-weight: medium; /* Make the AI settings text bold */
+}
+
+.settings input[type="checkbox"] {
+  margin-right: 8px;
+  margin-left: 8px;
+  width: 1.5em;
+  height: 1.5em;
+  accent-color: #1976d2; /* Optional: makes the checkbox blue in supported browsers */
+}
+
+.overlay {
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  display: block;
+  align-items: unset;
+  justify-content: unset;
+  z-index: auto;
+  margin-top: 0;
+}
+
+.message {
+  background: #fff;
+  padding: 24px 40px;
+  border-radius: 12px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+  min-width: 200px;
+  min-height: 2.5em; /* Reserve space for one line of text */
+  transition: background 0.2s;
+}
