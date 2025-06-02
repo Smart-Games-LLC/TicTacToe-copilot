@@ -1,54 +1,60 @@
-# React + TypeScript + Vite
+# Tic-Tac-Toe with Self-Learning AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React-based Tic-Tac-Toe game featuring an AI opponent that learns to play better over time using a simple form of Q-learning. The project was built entirely by GitHub Copilot, in less than a day, with about 50 prompts. There were several bugs that required console logging to debug, and one major refactor.
 
-Currently, two official plugins are available:
+(Copilot generated everything below.)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Classic Tic-Tac-Toe gameplay**: Play as X or O against a friend or the computer.
+- **Self-learning AI**: The AI uses a Q-learning-inspired approach, updating its strategy based on wins and losses from previous games.
+- **AI alternates sides**: After each game, the AI switches between playing as X and O.
+- **Modern UI**: Responsive, accessible, and visually appealing interface.
+- **Persistent learning**: The AI improves as you play more games in the same session.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## How the AI Works
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- The AI evaluates all possible moves and assigns a value to each based on its experience (stored as wins and losses for each board state).
+- If a board state is new, it is given a default value that encourages exploration.
+- The AI chooses the move with the highest value most of the time, but occasionally makes a random move to encourage exploration.
+- After each game, the AI updates its knowledge base, rewarding moves that led to wins and penalizing those that led to losses.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+2. **Run the development server:**
+   ```sh
+   npm start
+   ```
+
+3. **Build for production:**
+   ```sh
+   npm run build
+   ```
+
+4. **Lint the code:**
+   ```sh
+   npm run lint
+   ```
+
+## Deployment
+
+You can deploy the production build (`dist` or `build` folder) to any static hosting service, such as Vercel, Netlify, or GitHub Pages.
+
+## Project Structure
+
+- `src/App.tsx` — Main React component and game logic
+- `src/ai.ts` — AI logic and Q-learning implementation
+- `src/App.css` — Styles
+
+## License
+
+MIT
+
+---
+
+*Built with ❤️ and GitHub Copilot*
