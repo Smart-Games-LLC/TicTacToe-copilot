@@ -187,3 +187,26 @@
   min-height: 2.5em; /* Reserve space for one line of text */
   transition: background 0.2s;
 }
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.stat {
+  padding: 0.5rem 1rem;
+  border: 2px solid #646cff;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.stat:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}

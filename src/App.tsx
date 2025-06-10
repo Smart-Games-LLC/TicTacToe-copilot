@@ -32,6 +32,10 @@ function App() {
   const [aiPlayer, setAiPlayer] = useState<Player>('O')
   const [gameHistory, setGameHistory] = useState<Cell[][][]>([])
   const [gameOver, setGameOver] = useState(false)
+  const [humanWins, setHumanWins] = useState(0)
+  const [aiWins, setAiWins] = useState(0)
+  const [draws, setDraws] = useState(0) // New state for tracking draws
+
   const winner = calculateWinner(board)
   const isDraw = !winner && isBoardFull(board)
 
@@ -52,6 +56,17 @@ function App() {
         recordGameResult([...updatedHistory], newWinner)
         setGameHistory([])
         setGameOver(true)
+
+        // Increment win counters or draw counter
+        if (newWinner) {
+          if (newWinner === aiPlayer) {
+            setAiWins(aiWins => aiWins + 1)
+          } else {
+            setHumanWins(humanWins => humanWins + 1)
+          }
+        } else if (newIsDraw) {
+          setDraws(draws => draws + 1) // Increment draw counter
+        }
       } else {
         setGameOver(false)
       }
@@ -104,7 +119,14 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Tic Tac Toe</h1>
+      <div>
+        <h1>Tic Tac Toe</h1>
+        <div className="stats">
+          <div className="stat">Human Wins: {humanWins}</div>
+          <div className="stat">AI Wins: {aiWins}</div>
+          <div className="stat">Draws: {draws}</div>
+        </div>
+      </div>
       <div className="settings">
         <label>
           <input

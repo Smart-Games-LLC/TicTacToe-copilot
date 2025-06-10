@@ -23,12 +23,20 @@ This is a React-based Tic-Tac-Toe game featuring an AI opponent that learns to p
 
 1. **Install dependencies:**
    ```sh
+   sudo apt-get update
+   sudo apt install npm
+   nvm -v
+     version must be 18 or higher. if not
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+          source ~/.bashrc
+          nvm install 18
+          nvm use 18
    npm install
    ```
 
 2. **Run the development server:**
    ```sh
-   npm start
+   npm run dev
    ```
 
 3. **Build for production:**
