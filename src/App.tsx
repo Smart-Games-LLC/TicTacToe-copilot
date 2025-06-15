@@ -28,7 +28,7 @@ const emptyBoard: Cell[][] = [
 function App() {
   const [board, setBoard] = useState<Cell[][]>(emptyBoard)
   const [currentPlayer, setCurrentPlayer] = useState<Player>('X')
-  const [aiEnabled, setAiEnabled] = useState(false)
+  const [aiEnabled, setAiEnabled] = useState(true)
   const [aiPlayer, setAiPlayer] = useState<Player>('O')
   const [gameHistory, setGameHistory] = useState<Cell[][][]>([])
   const [gameOver, setGameOver] = useState(false)
