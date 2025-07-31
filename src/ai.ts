@@ -4,7 +4,7 @@ import type { Player, Cell } from './App'
 const stateStats: Map<string, { wins: number; losses: number }> = new Map()
 
 function getKey(state: Cell[][]): string {
-  return JSON.stringify(state)
+  return stateToInt(state).toString()
 }
 
 export function getAIMove(board: Cell[][], aiPlayer: Player): [number, number] | null {
@@ -105,7 +105,7 @@ export function recordGameResult(gameHistory: Cell[][][], winner: Player | null)
   } else {
     // If win, alternate win/loss starting from the end (last state is win)
     let isWin = true
-    console.log('updating win/loss for ', winner, 'game history:', gameHistory)
+    console.log('updating win/loss for ', winner)
     for (let i = gameHistory.length - 1; i >= 0; i--) {
       const state = gameHistory[i]
       const key = getKey(state)
@@ -115,6 +115,7 @@ export function recordGameResult(gameHistory: Cell[][][], winner: Player | null)
       } else {
         stats.losses += 2
       }
+      console.log('move' , i, 'state:', state, 'stats:', stats)
       stateStats.set(key, stats)
       isWin = !isWin
     }
