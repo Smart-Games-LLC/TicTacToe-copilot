@@ -3,6 +3,10 @@ import type { Player, Cell } from './App'
 // Persisted map: key is serialized game state, value is { wins, losses }
 const stateStats: Map<string, { wins: number; losses: number }> = new Map()
 
+function getKey(state: Cell[][]): string {
+  return JSON.stringify(state)
+}
+
 export function getAIMove(board: Cell[][], aiPlayer: Player): [number, number] | null {
   const opponent: Player = aiPlayer === 'X' ? 'O' : 'X'
   const moves: [number, number][] = []
@@ -64,7 +68,7 @@ export function getAIMove(board: Cell[][], aiPlayer: Player): [number, number] |
   for (const [row, col] of moves) {
     const testBoard = board.map(r => [...r])
     testBoard[row][col] = aiPlayer
-    const key = JSON.stringify(testBoard)
+    const key = getKey(testBoard)
     const stats = stateStats.get(key)
     let value = 0.55
     if (stats && (stats.wins + stats.losses) > 0) {
@@ -92,7 +96,7 @@ export function recordGameResult(gameHistory: Cell[][][], winner: Player | null)
   // If draw, all states are draws (+1 to both wins and losses)
   if (!winner) {
     for (const state of gameHistory) {
-      const key = JSON.stringify(state)
+      const key = getKey(state)
       const stats = stateStats.get(key) ?? { wins: 4, losses: 4 }
       stats.wins += 1
       stats.losses += 1
@@ -104,7 +108,7 @@ export function recordGameResult(gameHistory: Cell[][][], winner: Player | null)
     console.log('updating win/loss for ', winner, 'game history:', gameHistory)
     for (let i = gameHistory.length - 1; i >= 0; i--) {
       const state = gameHistory[i]
-      const key = JSON.stringify(state)
+      const key = getKey(state)
       const stats = stateStats.get(key) ?? { wins: 10, losses: 10 }
       if (isWin) {
         stats.wins += 2
@@ -115,4 +119,59 @@ export function recordGameResult(gameHistory: Cell[][][], winner: Player | null)
       isWin = !isWin
     }
   }
+}
+
+/**
+ * Converts a Cell value to a number:
+ * 0 if Cell is null, 1 if Cell is 'X', 2 if Cell is 'O'
+ */
+export function cellToNumber(cell: Cell): number {
+  if (cell === null) return 0
+  if (cell === 'X') return 1
+  if (cell === 'O') return 2
+  return 0
+}
+
+/**
+ * Converts a board state to a unique integer using cellToNumber and powers of 3.
+ * Considers all 8 rotations and reflections, returns the largest integer.
+ */
+export function stateToInt(state: Cell[][]): number {
+  // Helper to get cell value for a given variant
+  function getCell(variant: number, row: number, col: number): Cell {
+    switch (variant) {
+      case 0: // original
+        return state[row][col]
+      case 1: // rot90
+        return state[2 - col][row]
+      case 2: // rot180
+        return state[2 - row][2 - col]
+      case 3: // rot270
+        return state[col][2 - row]
+      case 4: // mirror (horizontal)
+        return state[row][2 - col]
+      case 5: // mirror + rot90
+        return state[2 - col][2 - row]
+      case 6: // mirror + rot180
+        return state[2 - row][col]
+      case 7: // mirror + rot270
+        return state[col][row]
+      default:
+        return state[row][col]
+    }
+  }
+
+  const results = Array(8).fill(0)
+  for (let variant = 0; variant < 8; variant++) {
+    let result = 0
+    let power = 1
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        result += cellToNumber(getCell(variant, row, col)) * power
+        power *= 3
+      }
+    }
+    results[variant] = result
+  }
+  return Math.max(...results)
 }
