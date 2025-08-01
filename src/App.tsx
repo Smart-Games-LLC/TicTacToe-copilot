@@ -35,6 +35,7 @@ function App() {
   const [humanWins, setHumanWins] = useState(0)
   const [aiWins, setAiWins] = useState(0)
   const [draws, setDraws] = useState(0) // New state for tracking draws
+  const [showAbout, setShowAbout] = useState(false) // Initialize to false
 
   const winner = calculateWinner(board)
   const isDraw = !winner && isBoardFull(board)
@@ -137,6 +138,15 @@ function App() {
           Enable AI ({aiPlayer})
         </label>
         <button className="ttt-newgame" onClick={handleRestart}>New Game</button>
+        <button
+          className="ttt-about"
+          onClick={() => {
+            console.log("About button clicked"); // Debug log
+            setShowAbout(true);
+          }}
+        >
+          About
+        </button>
       </div>
       <div className="ttt-board">
         {board.map((row, x) => (
@@ -154,15 +164,26 @@ function App() {
           </div>
         ))}
       </div>
-        <div className="overlay">
-          <div className="message">
-            {winner
-              ? `Player ${winner} wins!`
-              : isDraw
-                ? "It's a draw!"
-                : ""}
+      <div className="overlay">
+        <div className="message">
+          {winner
+            ? `Player ${winner} wins!`
+            : isDraw
+              ? "It's a draw!"
+              : ""}
+        </div>
+      </div>
+      {console.log("showAbout:", showAbout)}
+      {showAbout && (
+        <div className="overlay-about">
+          <div className="popup">
+            <h2>About Tic Tac Toe</h2>
+            <p>This is a simple Tic Tac Toe game with AI functionality.</p>
+            <p>Copyright © 2023. All rights reserved.</p>
+            <button className="popup-close" onClick={() => setShowAbout(false)}>Close</button>
           </div>
         </div>
+      )}
     </div>
   )
 }
