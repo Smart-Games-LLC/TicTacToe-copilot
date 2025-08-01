@@ -141,7 +141,6 @@ function App() {
         <button
           className="ttt-about"
           onClick={() => {
-            console.log("About button clicked"); // Debug log
             setShowAbout(true);
           }}
         >
@@ -173,13 +172,12 @@ function App() {
               : ""}
         </div>
       </div>
-      {console.log("showAbout:", showAbout)}
       {showAbout && (
         <div className="overlay-about">
           <div className="popup">
             <h2>About Tic Tac Toe</h2>
-            <p>This is a simple Tic Tac Toe game with AI functionality.</p>
-            <p>Copyright © 2023. All rights reserved.</p>
+            <p>This is a Tic Tac Toe game using reinforcement learning AI.</p>
+            <p>Copyright © 2025 David Fotland, Smart Games LLC. All rights reserved.</p>
             <button className="popup-close" onClick={() => setShowAbout(false)}>Close</button>
           </div>
         </div>
