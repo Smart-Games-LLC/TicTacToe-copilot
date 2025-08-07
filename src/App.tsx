@@ -30,7 +30,7 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<Player>('X')
   const [aiEnabled, setAiEnabled] = useState(true)
   const [aiPlayer, setAiPlayer] = useState<Player>('O')
-  const [gameHistory, setGameHistory] = useState<Cell[][][]>([])
+  const gameHistory = useRef<Cell[][][]>([]);
   const [gameOver, setGameOver] = useState(false)
   const [humanWins, setHumanWins] = useState(0)
   const [aiWins, setAiWins] = useState(0)
@@ -47,35 +47,33 @@ function App() {
 
   // Helper to record game state and check for game end
   function recordMove(newBoard: Cell[][]) {
-    setGameHistory(history => {
-      const updatedHistory = [...history, newBoard.map(row => [...row])]
-      const newWinner = calculateWinner(newBoard)
-      const newIsDraw = !newWinner && isBoardFull(newBoard)
+    const updatedHistory = [...gameHistory.current, newBoard.map(row => [...row])];
+    const newWinner = calculateWinner(newBoard);
+    const newIsDraw = !newWinner && isBoardFull(newBoard);
 
-      // Game finished
-      if ((newWinner && prevWinner.current !== newWinner) || (newIsDraw && !prevIsDraw.current)) {
-        recordGameResult([...updatedHistory], newWinner)
-        setGameHistory([])
-        setGameOver(true)
+    // Game finished
+    if ((newWinner && prevWinner.current !== newWinner) || (newIsDraw && !prevIsDraw.current)) {
+      recordGameResult([...updatedHistory], newWinner);
+      gameHistory.current = [];
+      setGameOver(true);
 
-        // Increment win counters or draw counter
-        if (newWinner) {
-          if (newWinner === aiPlayer) {
-            setAiWins(aiWins => aiWins + 1)
-          } else {
-            setHumanWins(humanWins => humanWins + 1)
-          }
-        } else if (newIsDraw) {
-          setDraws(draws => draws + 1) // Increment draw counter
+      // Increment win counters or draw counter
+      if (newWinner) {
+        if (newWinner === aiPlayer) {
+          setAiWins(aiWins => aiWins + 1);
+        } else {
+          setHumanWins(humanWins => humanWins + 1);
         }
-      } else {
-        setGameOver(false)
+      } else if (newIsDraw) {
+        setDraws(draws => draws + 1);
       }
-      prevWinner.current = newWinner
-      prevIsDraw.current = newIsDraw
+    } else {
+      setGameOver(false);
+    }
+    prevWinner.current = newWinner;
+    prevIsDraw.current = newIsDraw;
 
-      return updatedHistory
-    })
+    gameHistory.current = updatedHistory;
   }
 
   function handleClick(x: number, y: number, isAIMove = false) {
