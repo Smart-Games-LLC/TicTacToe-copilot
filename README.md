@@ -51,7 +51,7 @@ This is a React-based Tic-Tac-Toe game featuring an AI opponent that learns to p
 
 ## Deployment
 
-You can deploy the production build (`dist` or `build` folder) to any static hosting service, such as Vercel, Netlify, or GitHub Pages.
+You can deploy the production build (build` folder) to any static hosting service, such as Vercel, Netlify, or GitHub Pages.
 
 ## Project Structure
 
